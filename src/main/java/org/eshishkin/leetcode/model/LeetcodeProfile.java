@@ -8,14 +8,15 @@ public class LeetcodeProfile {
     private String name;
     private String username;
 
-    private int solved;
-    private int submitted;
-    private int accepted;
+    private String solved;
+    private String submitted;
+    private String accepted;
 
     private List<Problem> latestProblems;
 
     @Data
     public static class Problem {
+        private String id;
         private String name;
         private String url;
         private boolean accepted;

@@ -1,4 +1,4 @@
-package org.eshishkin.leetcode;
+package org.eshishkin.leetcode.service;
 
 import io.helidon.webserver.Routing;
 import io.helidon.webserver.Service;
