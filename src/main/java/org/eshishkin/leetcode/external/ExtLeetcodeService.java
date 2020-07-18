@@ -6,11 +6,15 @@ import org.eshishkin.leetcode.model.LeetcodeProfile.Problem;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 
+import javax.inject.Inject;
+import javax.inject.Singleton;
 import java.util.stream.Collectors;
 
-@AllArgsConstructor
+@Singleton
+@AllArgsConstructor(onConstructor_= @Inject)
 public class ExtLeetcodeService {
-    private LeetcodeClient client;
+
+    private final LeetcodeClient client;
 
     public LeetcodeProfile getProfile(String userId) {
         String html = client.getProfile(userId);

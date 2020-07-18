@@ -1,30 +1,16 @@
 package org.eshishkin.leetcode;
 
-import io.helidon.config.Config;
-import io.helidon.media.jackson.JacksonSupport;
-import io.helidon.webserver.WebServer;
-import org.eshishkin.leetcode.config.RouterConfig;
+import com.google.inject.Guice;
+import com.google.inject.Injector;
+import lombok.extern.slf4j.Slf4j;
+import org.eshishkin.leetcode.config.ApplicationBindingModule;
 
-import java.util.concurrent.atomic.AtomicLong;
-
+@Slf4j
 public class Application {
 
     public static void main(String[] args) {
-        Config config = Config.create();
-        final long now = System.currentTimeMillis();
-
-        WebServer.builder()
-                .addMediaSupport(JacksonSupport.create())
-                .config(config.get("server"))
-                .routing(() -> new RouterConfig().routing())
-                .build()
-                .start()
-                .thenAccept(server -> {
-
-                    System.out.println(String.format(
-                            "Server started at: http://localhost:%s (%s ms)",
-                            server.port(), System.currentTimeMillis() - now
-                    ));
-                });
+        Injector injector = Guice.createInjector(new ApplicationBindingModule());
+        WebApplication server = injector.getInstance(WebApplication.class);
+        server.start();
     }
 }

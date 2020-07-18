@@ -3,16 +3,23 @@ package org.eshishkin.leetcode.config;
 import io.helidon.health.HealthSupport;
 import io.helidon.health.checks.HealthChecks;
 import io.helidon.webserver.Routing;
-import org.eshishkin.leetcode.service.HelloWorldResource;
+import lombok.AllArgsConstructor;
 import org.eshishkin.leetcode.service.LeetcodeProfileResource;
 
-public class RouterConfig {
+import javax.inject.Inject;
+import javax.inject.Provider;
+import javax.inject.Singleton;
 
-    public Routing routing() {
+@Singleton
+@AllArgsConstructor(onConstructor_= @Inject)
+public class RouterConfigProvider implements Provider<Routing> {
+    private final LeetcodeProfileResource leetcodeProfileResource;
+
+    @Override
+    public Routing get() {
         return Routing.builder()
                 .register(this::healthChecks)
-                .register(HelloWorldResource::new)
-                .register(LeetcodeProfileResource::new)
+                .register(leetcodeProfileResource)
                 .build();
     }
 

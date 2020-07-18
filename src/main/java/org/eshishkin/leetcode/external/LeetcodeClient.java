@@ -1,5 +1,7 @@
 package org.eshishkin.leetcode.external;
 
+import javax.inject.Inject;
+import javax.inject.Singleton;
 import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
@@ -7,15 +9,14 @@ import java.time.Duration;
 
 import static java.net.http.HttpResponse.BodyHandlers.ofString;
 
+@Singleton
 public class LeetcodeClient {
-    private HttpClient client;
 
-    public LeetcodeClient() {
-        this.client = HttpClient
-                .newBuilder()
-                .followRedirects(HttpClient.Redirect.NORMAL)
-                .connectTimeout(Duration.ofSeconds(30))
-                .build();
+    private final HttpClient client;
+
+    @Inject
+    public LeetcodeClient(HttpClient.Builder builder) {
+        client = builder.build();
     }
 
     public String getProfile(String userId) {
