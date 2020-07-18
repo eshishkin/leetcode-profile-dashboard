@@ -1,10 +1,10 @@
 package org.eshishkin.leetcode.service;
 
+import io.helidon.common.reactive.Single;
 import io.helidon.webserver.Routing;
 import io.helidon.webserver.Service;
 import lombok.AllArgsConstructor;
 import org.eshishkin.leetcode.external.ExtLeetcodeService;
-import org.eshishkin.leetcode.model.LeetcodeProfile;
 
 import javax.inject.Inject;
 import javax.inject.Singleton;
@@ -19,8 +19,7 @@ public class LeetcodeProfileResource implements Service {
     public void update(Routing.Rules rules) {
         rules.get("/profile/{userId}", (req, res) -> {
             String userId = req.path().param("userId");
-            LeetcodeProfile profile = service.getProfile(userId);
-            res.send(profile);
+            res.send(Single.create(service.getProfile(userId)));
         });
     }
 }

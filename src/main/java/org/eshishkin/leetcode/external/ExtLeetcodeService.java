@@ -8,6 +8,7 @@ import org.jsoup.nodes.Document;
 
 import javax.inject.Inject;
 import javax.inject.Singleton;
+import java.util.concurrent.CompletableFuture;
 import java.util.stream.Collectors;
 
 @Singleton
@@ -16,9 +17,11 @@ public class ExtLeetcodeService {
 
     private final LeetcodeClient client;
 
-    public LeetcodeProfile getProfile(String userId) {
-        String html = client.getProfile(userId);
-        return toProfile(Jsoup.parse(html));
+    public CompletableFuture<LeetcodeProfile> getProfile(String userId) {
+        return client
+                .getProfile(userId)
+                .thenApply(Jsoup::parse)
+                .thenApply(this::toProfile);
     }
 
     private LeetcodeProfile toProfile(Document document) {
