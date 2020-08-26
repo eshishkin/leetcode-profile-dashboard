@@ -21,6 +21,7 @@
         <mockito-core.version>3.3.3</mockito-core.version>
         <commons-lang3.version>3.10</commons-lang3.version>
         <maven-surefire-plugin.version>2.22.2</maven-surefire-plugin.version>
+        <jib-maven-plugin.version>2.5.2</jib-maven-plugin.version>
 
         <final-name>leetcode-profile-comparator</final-name>
     </properties>
@@ -159,6 +160,25 @@
                         </manifest>
                     </archive>
                 </configuration>
+            </plugin>
+
+            <plugin>
+                <groupId>com.google.cloud.tools</groupId>
+                <artifactId>jib-maven-plugin</artifactId>
+                <version>${jib-maven-plugin.version}</version>
+                <configuration>
+                    <to>
+                        <image>eshishkin/leetcode-dashboard</image>
+                    </to>
+                </configuration>
+                <executions>
+                    <execution>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>dockerBuild</goal>
+                        </goals>
+                    </execution>
+                </executions>
             </plugin>
         </plugins>
     </build>
