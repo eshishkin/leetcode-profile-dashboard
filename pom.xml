@@ -5,9 +5,9 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>org.eshishkin</groupId>
-    <artifactId>leetcode-profile-comparator</artifactId>
+    <artifactId>leetcode-profile-dashboard</artifactId>
     <version>1.0-SNAPSHOT</version>
-    <name>Leetcode Profile Comparator</name>
+    <name>Leetcode Profile Dashboard</name>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -23,7 +23,7 @@
         <maven-surefire-plugin.version>2.22.2</maven-surefire-plugin.version>
         <jib-maven-plugin.version>2.5.2</jib-maven-plugin.version>
 
-        <final-name>leetcode-profile-comparator</final-name>
+        <final-name>leetcode-profile-dashboard</final-name>
     </properties>
 
     <dependencyManagement>
