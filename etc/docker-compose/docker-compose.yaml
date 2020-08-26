@@ -1,0 +1,16 @@
+version: "2"
+
+services:
+
+  app:
+    image: eshishkin/leetcode-dashboard:latest
+    mem_limit: 128m
+    expose:
+      - "8080"
+    ports:
+      - "18080:8080"
+    networks:
+      backend:
+
+networks:
+  backend:
