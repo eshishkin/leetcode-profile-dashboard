@@ -1,5 +1,7 @@
 package org.eshishkin.leetcode.external;
 
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import lombok.AllArgsConstructor;
 import org.eshishkin.leetcode.model.LeetcodeProfile;
 import org.eshishkin.leetcode.model.LeetcodeProfile.Problem;
@@ -14,6 +16,7 @@ import java.util.stream.Collectors;
 @Singleton
 @AllArgsConstructor(onConstructor_= @Inject)
 public class ExtLeetcodeService {
+    private static final Pattern ACCEPTANCE_PATTERN = Pattern.compile("(\\d*) / (.*)");
 
     private final LeetcodeClient client;
 
@@ -34,12 +37,6 @@ public class ExtLeetcodeService {
                 .first()
                 .text();
 
-        String acceptance = document
-                .getElementsContainingOwnText("Acceptance Rate")
-                .select(".badge")
-                .first()
-                .text();
-
         String submissions = document
                 .getElementsContainingOwnText("Accepted Submission")
                 .select(".badge")
@@ -49,8 +46,9 @@ public class ExtLeetcodeService {
         LeetcodeProfile profile = new LeetcodeProfile();
         profile.setName(name);
         profile.setUsername(username);
-        profile.setSolved(solved);
-        profile.setAccepted(submissions);
+        profile.setSolved(getSolved(solved));
+        profile.setAccepted(getAccepted(submissions));
+        profile.setSubmitted(getTotalSubmissions(submissions));
         profile.setLatestProblems(document
                 .select("a[href*=/problems]")
                 .stream()
@@ -66,5 +64,20 @@ public class ExtLeetcodeService {
         );
 
         return profile;
+    }
+
+    private Integer getAccepted(String submissions) {
+        Matcher matcher = ACCEPTANCE_PATTERN.matcher(submissions);
+        return matcher.matches() ? Integer.valueOf(matcher.group(1)) : null;
+    }
+
+    private Integer getTotalSubmissions(String submissions) {
+        Matcher matcher = ACCEPTANCE_PATTERN.matcher(submissions);
+        return matcher.matches() ? Integer.valueOf(matcher.group(2)) : null;
+    }
+
+    private Integer getSolved(String data) {
+        Matcher matcher = ACCEPTANCE_PATTERN.matcher(data);
+        return matcher.matches() ? Integer.valueOf(matcher.group(1)) : null;
     }
 }

@@ -6,6 +6,7 @@ import io.helidon.health.checks.HealthChecks;
 import io.helidon.metrics.MetricsSupport;
 import io.helidon.webserver.Routing;
 import lombok.AllArgsConstructor;
+import org.eshishkin.leetcode.service.LeetcodeProfileMetricResource;
 import org.eshishkin.leetcode.service.LeetcodeProfileResource;
 
 import javax.inject.Inject;
@@ -16,6 +17,7 @@ import javax.inject.Singleton;
 @AllArgsConstructor(onConstructor_= @Inject)
 public class RouterConfigProvider implements Provider<Routing> {
     private final LeetcodeProfileResource leetcodeProfileResource;
+    private final LeetcodeProfileMetricResource leetcodeProfileMetricResource;
 
     @Override
     public Routing get() {
@@ -23,6 +25,7 @@ public class RouterConfigProvider implements Provider<Routing> {
                 .register(healthChecks())
                 .register(metrics())
                 .register(leetcodeProfileResource)
+                .register(leetcodeProfileMetricResource)
                 .any((req, res) -> {
                     res.status(Status.NOT_FOUND_404);
                     res.send();

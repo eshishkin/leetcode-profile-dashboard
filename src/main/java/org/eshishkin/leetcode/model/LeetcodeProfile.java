@@ -8,9 +8,9 @@ public class LeetcodeProfile {
     private String name;
     private String username;
 
-    private String solved;
-    private String submitted;
-    private String accepted;
+    private Integer solved;
+    private Integer submitted;
+    private Integer accepted;
 
     private List<Problem> latestProblems;
 
