@@ -1,6 +1,18 @@
 version: "2"
 
 services:
+  prometheus:
+    image: prom/prometheus:v2.20.1
+    expose:
+      - "9090"
+    ports:
+      - "19090:9090"
+    volumes:
+      - "./prometheus.yml:/etc/prometheus/prometheus.yml"
+    networks:
+      backend:
+        aliases:
+          - prometheus.service.com
 
   app:
     image: eshishkin/leetcode-dashboard:latest
@@ -11,6 +23,8 @@ services:
       - "18080:8080"
     networks:
       backend:
+        aliases:
+          - leetcode-dashboard.service.com
 
 networks:
   backend:
