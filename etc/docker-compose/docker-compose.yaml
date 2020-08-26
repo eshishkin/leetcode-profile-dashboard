@@ -1,6 +1,19 @@
 version: "2"
 
 services:
+  grafana:
+    image: grafana/grafana:7.0.4
+    expose:
+      - "3000"
+    ports:
+      - "13000:3000"
+    volumes:
+      - "./grafana/prometheus.yaml:/etc/grafana/provisioning/datasources/prometheus.yml"
+      - "./grafana/dashboard-provider.yml:/etc/grafana/provisioning/dashboards/dashboard-provider.yml"
+      - "./grafana/leetcode_dashboard.json:/etc/grafana/provisioning/dashboards/leetcode_dashboard.json"
+    networks:
+      backend:
+
   prometheus:
     image: prom/prometheus:v2.20.1
     expose:
