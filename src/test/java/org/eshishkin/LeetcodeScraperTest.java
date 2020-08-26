@@ -1,14 +1,15 @@
 package org.eshishkin;
 
+import java.io.IOException;
+import java.util.Optional;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import java.io.IOException;
-import java.util.Optional;
-
+@Disabled
 @ExtendWith(MockitoExtension.class)
 public class LeetcodeScraperTest {
 
