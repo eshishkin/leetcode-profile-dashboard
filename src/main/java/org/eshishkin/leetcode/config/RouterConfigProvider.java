@@ -3,6 +3,7 @@ package org.eshishkin.leetcode.config;
 import io.helidon.common.http.Http.Status;
 import io.helidon.health.HealthSupport;
 import io.helidon.health.checks.HealthChecks;
+import io.helidon.metrics.MetricsSupport;
 import io.helidon.webserver.Routing;
 import lombok.AllArgsConstructor;
 import org.eshishkin.leetcode.service.LeetcodeProfileResource;
@@ -19,7 +20,8 @@ public class RouterConfigProvider implements Provider<Routing> {
     @Override
     public Routing get() {
         return Routing.builder()
-                .register(this::healthChecks)
+                .register(healthChecks())
+                .register(metrics())
                 .register(leetcodeProfileResource)
                 .any((req, res) -> {
                     res.status(Status.NOT_FOUND_404);
@@ -36,5 +38,9 @@ public class RouterConfigProvider implements Provider<Routing> {
         return HealthSupport.builder()
                 .addLiveness(HealthChecks.healthChecks())
                 .build();
+    }
+
+    private MetricsSupport metrics() {
+        return MetricsSupport.builder().build();
     }
 }
